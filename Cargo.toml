@@ -13,3 +13,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+pwm-pca9685 = "0.3.1"
+linux-embedded-hal = { version = "0.3", features = ["gpio_cdev"] }
+rppal = "0.13.1"
+serde = "1.0.137"
+thiserror = "1.0.31"
