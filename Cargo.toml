@@ -1,0 +1,15 @@
+[package]
+name = "motorkit_rewound"
+authors = ["rowan-sl <r@fawkes.io>"]
+description = "A (hopefully) improved remake of the adafruit_motorkit crate"
+readme = "README.md"
+homepage = "https://github.com/rowan-sl/motorkit_rewound"
+repository = "https://github.com/rowan-sl/motorkit_rewound"
+keywords = ["motor", "adafruit", "dc", "stepper"]
+license = "MIT"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
