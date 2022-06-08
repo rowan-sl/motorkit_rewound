@@ -1,9 +1,9 @@
 # motorkit_rewound
+
 A (hopefully) improved remake of the adafruit_motorkit crate
 
-## **IMPORTANT**: a note to future users of the adafruit_motorkit raspberry pi hat
+## Credit
 
-DO NOT BUY THE HAT IF YOU WANT TO USE IT FOR STEPPER MOTORS! it gives you zero ability to set the motor to run at a constant rate,
-and you can only use it to move the motor one step at a time
+I did not make the code this is based off of, all credit goes to ostrosco. the original version is [here](https://github.com/ostrosco/adafruit_motorkit).
 
-IT IS A WASTE OF YOUR MONEY
+This is simply my attempt at a remake, and fixing some issues that I had with their library
