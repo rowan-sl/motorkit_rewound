@@ -5,8 +5,8 @@ use pwm_pca9685::{Channel, Pca9685};
 use std::cmp::Ordering;
 
 impl Motor {
-    fn to_dc_channels(self) -> DcChannels {
-        match self {
+    fn to_dc_channels(self) -> Result<DcChannels, MotorError> {
+        Ok(match self {
             Motor::Motor1 => {            DcChannels {
                 ref_channel: Channel::C8,
                 forward_channel: Channel::C9,
@@ -27,8 +27,8 @@ impl Motor {
                 forward_channel: Channel::C5,
                 backward_channel: Channel::C6,
             }}
-            _ => panic!("motor is not a dc motor")
-        }
+            _ => Err(MotorError::InvalidMotorError)?
+        })
     }
 }
 
@@ -51,7 +51,7 @@ impl DcMotor {
         pwm: &mut Pca9685<I2cdev>,
         motor: Motor,
     ) -> Result<Self, MotorError> {
-        let channels = motor.to_dc_channels();
+        let channels = motor.to_dc_channels()?;
 
         // Set the channels we'll be using to on at 0.
         pwm.set_channel_on(channels.ref_channel, 0)
@@ -65,7 +65,7 @@ impl DcMotor {
         pwm.set_channel_off(channels.ref_channel, 4095)
             .map_err(|_| MotorError::ChannelError)?;
         Ok(Self {
-            channels: channels,
+            channels,
         })
     }
 

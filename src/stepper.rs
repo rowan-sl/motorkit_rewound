@@ -5,8 +5,8 @@ use pwm_pca9685::{Channel, Pca9685};
 use std::f32::consts::PI;
 
 impl Motor {
-    fn to_step_channels(self) -> StepChannels {
-        match self {
+    fn to_step_channels(self) -> Result<StepChannels, MotorError> {
+        Ok(match self {
             Motor::Stepper1 => {
                 StepChannels {
                     ref_channel1: Channel::C8,
@@ -27,8 +27,8 @@ impl Motor {
                     bin2: Channel::C6,
                 }
             }
-            _ => panic!("not a stepper motor")
-        }
+            _ => Err(MotorError::InvalidMotorError)?
+        })
     }
 }
 
@@ -73,7 +73,7 @@ impl StepperMotor {
         step_motor: Motor,
         microsteps: Option<u32>,
     ) -> Result<Self, MotorError> {
-        let channels = step_motor.to_step_channels();
+        let channels = step_motor.to_step_channels()?;
         let microsteps = microsteps.unwrap_or(16) as i32;
         let curve: Vec<i32> = (0..microsteps + 1)
             .map(|i| {

@@ -16,5 +16,5 @@ edition = "2021"
 pwm-pca9685 = "0.3.1"
 linux-embedded-hal = { version = "0.3", features = ["gpio_cdev"] }
 rppal = "0.13.1"
-serde = "1.0.137"
+serde = { version = "1.0.137", features = ["derive"] }
 thiserror = "1.0.31"

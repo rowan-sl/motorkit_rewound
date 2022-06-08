@@ -5,32 +5,28 @@ pub mod stepper;
 pub mod dc;
 
 pub mod error {
-    use std::{fmt, error::Error};
-
-    #[derive(Debug)]
+    #[derive(Debug, Clone, thiserror::Error, serde::Serialize, serde::Deserialize)]
     /// A list of all errors that can be thrown by the library.
     pub enum MotorError {
         /// An error occurred initializing the I2C bus.
+        #[error("An error occured initializing the I2C bus")]
         I2cError,
         /// An error occurred configuring the PCA9685.
+        #[error("An error occured configuring the PCA9685")]
         PwmError,
         /// An error occurred setting a channel.
+        #[error("An error occured setting a channel")]
         ChannelError,
         /// The value for throttle is not in the bounds of [-1.0, 1.0].
+        #[error("The value for the throttle is not in the bounds of [-1.0, 1.0]")]
         ThrottleError,
         /// An invalid motor was provided to a constructor, i.e. a stepper motor
         /// passed into the DcMotor constructor.
+        #[error("An invalid motor was provided to a constructor, i.e. a stepper motor passed into the DcMotor constructor!")]
         InvalidMotorError,
     }
 
-    impl fmt::Display for MotorError {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            write!(f, "{:?}", self)
-        }
-    }
-
-    impl Error for MotorError {}
-
+    /// cannot be serialize bc of inner values
     #[derive(Debug, thiserror::Error)]
     pub enum InitError {
         #[error("Failed to initialize the i2c bus: {0:?}")]
@@ -40,7 +36,7 @@ pub mod error {
     }
 }
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 /// An enumeration of all potential motors that can be controlled via the
 /// Motor HAT.
 pub enum Motor {
